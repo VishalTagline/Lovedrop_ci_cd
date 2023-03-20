@@ -1,23 +1,52 @@
-import { View, Text, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
+import { View, Text, KeyboardAvoidingView, Platform, StyleSheet, Alert } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import CustomHeader from '../../components/CustomHeader';
-import { GlobalStyles } from '../../styles/GlobalStyles';
+import { useGlobalStyles } from '../../styles/GlobalStyles';
 import { AppStrings } from '../../utils/AppStrings';
-import { FontSizes } from '../../utils/Fontsizes';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import CustomPrimaryButton from '../../components/CustomPrimaryButton';
 import CustomSecondarybutton from '../../components/CustomSecondarybutton';
-import PhoneInput from 'react-native-phone-number-input';
 import { useCustomAuthNavigation } from '../../navigation/hooks/useCustomNavigation';
-import { Colors } from '../../styles/Colors';
 import CustomPhoneNumberField from '../../components/CustomPhoneNumberField';
+import { Formik, useFormik } from 'formik';
+import * as Yup from 'yup';
+import PhoneInput from 'react-native-phone-number-input';
+import CustomTextInput from '../../components/CustomTextInput';
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+
 
 const MobileNumberScreen = () => {
 
   const [phoneNum, setphoneNum] = useState('');
   const [phoneNumError, setphoneNumError] = useState('');
+  const [disabled, setdisabled] = useState(true);
+  const [confirm, setconfirm] = useState<FirebaseAuthTypes.ConfirmationResult>();
 
   const { navigation } = useCustomAuthNavigation('MobileNumberScreen');
+
+  const GlobalStyles = useGlobalStyles()
+
+  const formik = useFormik({
+    initialValues: {
+      phoneNumber: ''
+    },
+    onSubmit: val => {
+      // console.log(val)
+      // resetForm()
+      // navigation.navigate('OTPCodeScreen', {
+      //   number: val.phoneNumber,
+      // });
+    },
+    validationSchema: Yup.object().shape({
+      phoneNumber: Yup
+        .string()
+        .trim()
+        .required(AppStrings.phoneRequied)
+        .min(10, AppStrings.phoneNumError)
+        .matches(/^\+?([0-9]{2})\)?([0-9]{10})$/, AppStrings.phoneNumError)
+
+    })
+  })
+
+
 
   useEffect(() => {
     navigation.addListener('focus', () => {
@@ -28,6 +57,28 @@ const MobileNumberScreen = () => {
     setphoneNumError('');
   }, []);
 
+
+  const signinPhoneNumber = async (number: string) => {
+    try {
+      const res = await auth().signInWithPhoneNumber(number, true);
+      console.log('result of phone number signin : ', res);
+      setconfirm(res);
+      navigation.navigate('OTPCodeScreen', {
+        // number: number,
+        // confirm: res
+        data: {
+          phoneNumber: number,
+          confirm: res,
+        },
+      });
+
+    } catch (error: any) {
+      console.log('ERROR : : ', { error });
+      Alert.alert('Signin', error.userInfo.message);
+    }
+  }
+
+
   return (
     <View style={GlobalStyles.mainContainer}>
       <CustomHeader
@@ -37,44 +88,103 @@ const MobileNumberScreen = () => {
         }}
       />
       <KeyboardAvoidingView behavior={'height'} style={{ flex: 1 }}>
-        <View style={GlobalStyles.formHeaderContainer}>
+        {/* <View style={GlobalStyles.formHeaderContainer}>
           <Text style={GlobalStyles.formHeader}>{AppStrings.myNumber}</Text>
-          {/* <PhoneInput
-            ref={phone}
-            textContainerStyle={{backgroundColor: Colors.PRIMARY_BG}}
-            textInputStyle={{borderBottomWidth: 1}}
-            // placeholder={' '}
-            // containerStyle={{marginVertical: wp(5)}}
-            onChangeText={val => {
-              setphoneNum(val);
-            }}
-            value={phoneNum}
-          /> */}
           <CustomPhoneNumberField
-            value={phoneNum}
-            onChangeText={(val) => {
-              setphoneNum(val)
-            }}
+            value={formik.values.phoneNumber}
+            onChangeText={
+              formik.handleChange('phoneNumber')
+              // (val) => {
+              //   if (val != '') {
+              //     setdisabled(false)
+              //   } else {
+              //     setdisabled(true)
+              //   }
+              //   setphoneNum(val)
+              // }
+            }
           />
-          <Text style={GlobalStyles.errorText}>{phoneNumError}</Text>
+          {formik.touched.phoneNumber && formik.errors.phoneNumber ? <Text style={GlobalStyles.errorText}>{formik.errors.phoneNumber}</Text> : null}
+          
           <Text style={GlobalStyles.infoText}>{AppStrings.weWillSendCode}</Text>
         </View>
         <View style={GlobalStyles.floatingBtnContainer}>
           <CustomSecondarybutton
+            disabled={formik.values.phoneNumber ? false : true}
             title={AppStrings.continue}
             onPress={() => {
-              console.log(phoneNum);
-              if (phoneNum.length != 10) {
-                setphoneNumError(AppStrings.phoneNumError);
-              } else {
-                setphoneNumError('');
-                navigation.navigate('OTPCodeScreen', {
-                  number: phoneNum,
-                });
-              }
+              formik.handleSubmit()
+              // console.log(phoneNum);
+              // if (formik.values.phoneNumber.length != 10) {
+              //   setphoneNumError(AppStrings.phoneNumError);
+              // } else {
+              //   setphoneNumError('');
+              //   navigation.navigate('OTPCodeScreen', {
+              //     number: phoneNum,
+              //   });
+              // }
             }}
           />
-        </View>
+        </View> */}
+
+        <Formik
+          initialValues={{
+            phoneNumber: ''
+          }}
+          validationSchema={
+            Yup.object().shape({
+              phoneNumber: Yup
+                .string()
+                .trim()
+                .required(AppStrings.phoneRequied)
+                .min(10, AppStrings.phoneNumError)
+                .matches(/^\+?([0-9]{2})\)?([0-9]{10})$/, AppStrings.phoneNumError)
+
+            })}
+          onSubmit={values => {
+
+            // console.log(values)
+            // navigation.navigate('OTPCodeScreen', {
+            //   number: values.phoneNumber,
+            // });
+          }}
+        >
+          {({ values, errors, setFieldValue, }) => (
+            <>
+              <View style={GlobalStyles.formHeaderContainer}>
+
+                <Text style={GlobalStyles.formHeader}>{AppStrings.myNumber}</Text>
+
+                <CustomPhoneNumberField
+                  value={values.phoneNumber}
+                  onChangeText={
+                    (val) => {
+                      setFieldValue('phoneNumber', val)
+                    }
+                  }
+
+                />
+                {(errors.phoneNumber) ? <Text style={GlobalStyles.errorText}>{errors.phoneNumber}</Text> : null}
+                <Text style={GlobalStyles.infoText}>{AppStrings.weWillSendCode}</Text>
+              </View>
+              <View style={GlobalStyles.floatingBtnContainer}>
+                <CustomSecondarybutton
+                  disabled={!!errors.phoneNumber || values.phoneNumber.length == 0}
+                  // disabled={formik.errors.phoneNumber ? true : false}
+                  title={AppStrings.continue}
+                  onPress={
+                    () => {
+                      signinPhoneNumber(values.phoneNumber)
+                      // navigation.navigate('OTPCodeScreen', {
+                      //   number: values.phoneNumber,
+                      // });
+                    }
+                  }
+                />
+              </View>
+            </>
+          )}
+        </Formik>
       </KeyboardAvoidingView>
     </View>
   );

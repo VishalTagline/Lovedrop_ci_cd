@@ -1,35 +1,101 @@
-import { KeyboardAvoidingView, Platform, StyleSheet, Text, View } from 'react-native'
+import { Alert, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import CustomHeader from '../../components/CustomHeader';
-import { GlobalStyles } from '../../styles/GlobalStyles';
-import { useCustomAuthNavigation } from '../../navigation/hooks/useCustomNavigation';
+import { useGlobalStyles } from '../../styles/GlobalStyles';
+import { useCustomAuthNavigation, useCustomNavigation } from '../../navigation/hooks/useCustomNavigation';
 import CustomSecondarybutton from '../../components/CustomSecondarybutton';
 import { AppStrings } from '../../utils/AppStrings';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { FontSizes } from '../../utils/Fontsizes';
-import { Colors } from '../../styles/Colors';
 import CustomOTPInput from '../../components/CustomOTPInput';
+import { useAppSelector } from '../../redux/Store';
+import { useFormik } from 'formik';
+import * as Yup from 'yup'
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+
+
 
 const OTPCodeScreen = () => {
 
   const [otp, setotp] = useState('');
   const [otpError, setotpError] = useState('');
+  const [disabled, setdisabled] = useState(true);
   const { navigation, route } = useCustomAuthNavigation('OTPCodeScreen');
+  const { navigationMain } = useCustomNavigation('AuthStack');
+  const GlobalStyles = useGlobalStyles()
+  const { colors } = useAppSelector(state => state.CommonSlice);
+
+  // const formik = useFormik({
+  //   initialValues: {
+  //     otp: ''
+  //   },
+  //   validationSchema: Yup.object().shape({
+  //     otp: Yup
+  //       .string()
+  //       .trim()
+  //       .required(AppStrings.otpError)
+  //       .matches(/^\d{6}$/, AppStrings.otpError)
+
+  //   }),
+  //   onSubmit: (val) => console.log('onsubmit : ', val),
+  // })
+
 
   // console.log(route.params?.number);
-  let number = route.params?.number;
+  let number = route.params?.data.phoneNumber;
+  let confirm = route.params?.data.confirm;
+  console.log('route.params?.confirm : ', confirm)
 
   useEffect(() => {
     setotp('')
     setotpError('')
   }, []);
 
+
+  const verifyOTP = async (OTP: string) => {
+    try {
+      const res = await confirm?.confirm(OTP);
+      console.log('otp result : ', res);
+      console.log('USER : ', res?.user);
+
+      const isExists = (await firestore().collection('Users').doc(res?.user.uid).get()).exists
+      console.log("isExists  : ", isExists)
+
+      if (isExists) {
+        // Alert.alert('Exists : ' + isExists)
+        navigationMain.replace('HomeScreen')
+      } else {
+        navigation.navigate('EmailScreen', {
+          data: {
+            phoneNumber: number,
+            id: res?.user.uid
+          }
+        });
+      }
+
+    } catch (error: any) {
+      console.log('ERROR : : ', { error });
+      if (error.code == 'auth/invalid-verification-code') {
+        Alert.alert(AppStrings.appName, 'Invalid OTP code.')
+
+      } else if (error.userInfo) {
+        Alert.alert('Signin', error.userInfo.message);
+      } else {
+        Alert.alert('Signin', 'Something went wrong !');
+      }
+    }
+  };
+
+  // console.log(formik.values.otp)
+
   return (
     <View style={GlobalStyles.mainContainer}>
       <CustomHeader
         back
         onPress={() => {
-          navigation.goBack();
+          // navigation.goBack();
+          navigation.navigate('MobileNumberScreen');
         }}
       />
       <KeyboardAvoidingView
@@ -40,26 +106,63 @@ const OTPCodeScreen = () => {
           <Text
             style={{
               ...GlobalStyles.infoText,
-              color: Colors.grey,
+              color: colors.LIGHT_TEXT,
             }}>
             {number}{' '}
-            <Text style={{ color: Colors.PRIMART_TEXT }}>{AppStrings.resend}</Text>
+            {/* <TouchableOpacity onPress={async () => {
+              confirm = await auth().signInWithPhoneNumber(number)
+            }}> */}
+            <Text style={{ color: colors.PRIMART_TEXT }}
+              onPress={async () => {
+                // confirm = await auth().signInWithPhoneNumber(number)
+              }}>
+              {AppStrings.resend}
+            </Text>
+            {/* </TouchableOpacity> */}
           </Text>
-          <CustomOTPInput onChangeText={setotp} />
+
+          <CustomOTPInput
+            value={otp}
+            onChangeText={
+              // formik.handleChange('otp')
+              (val) => {
+                console.log('otp : ', val)
+                // if (val != '') {
+                //   setdisabled(false)
+                // } else {
+                //   setdisabled(true)
+                // }
+
+                if (val.length < 6) {
+                  console.log('lemgth :', val.length)
+                  setdisabled(true)
+                } else {
+                  setdisabled(false)
+                }
+
+                setotp(val)
+              }
+            } />
           <Text style={GlobalStyles.errorText}>{otpError}</Text>
         </View>
         <View style={GlobalStyles.floatingBtnContainer}>
           <CustomSecondarybutton
+            disabled={disabled}
             title={AppStrings.continue}
-            onPress={() => {
-              console.log(otp);
-              if (!otp) {
-                setotpError(AppStrings.otpError);
-              } else {
-                setotpError('');
-                navigation.navigate('EmailScreen');
+            onPress={
+              () => {
+                // formik.handleSubmit()
+                console.log(otp);
+                let reg = /^\d+$/
+                if (!otp || !reg.test(otp)) {
+                  setotpError(AppStrings.otpError);
+                } else {
+                  setotpError('');
+                  verifyOTP(otp)
+                  // navigation.navigate('EmailScreen');
+                }
               }
-            }}
+            }
           />
         </View>
       </KeyboardAvoidingView>

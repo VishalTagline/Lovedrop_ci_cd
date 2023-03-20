@@ -1,34 +1,32 @@
 import { View, Text, Image, StyleSheet } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Images } from '../../utils/ImagePaths';
 import { AppStrings } from '../../utils/AppStrings';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import { Colors } from '../../styles/Colors';
-import { GlobalStyles } from '../../styles/GlobalStyles';
-import { FontSizes } from '../../utils/Fontsizes';
+import { useGlobalStyles } from '../../styles/GlobalStyles';
 import CustomPrimaryButton from '../../components/CustomPrimaryButton';
 import CustomSecondarybutton from '../../components/CustomSecondarybutton';
-import {
-  NativeStackNavigationProp,
-  NativeStackScreenProps,
-} from '@react-navigation/native-stack';
-
-import { AuthStackParamList } from '../../types/NavigationTypes/navigationTypes';
-import { useNavigation } from '@react-navigation/native';
 import { useCustomAuthNavigation, useCustomNavigation } from '../../navigation/hooks/useCustomNavigation';
+import { useAppDispatch } from '../../redux/Store';
+import { setTheme } from '../../redux/slice/CommonSlice';
 
 // type NavigationProps=NativeStackNavigationProp<AuthStackParamList,'AuthScreen'>
 
 // type Props = NativeStackScreenProps<AuthStackParamList, 'AuthScreen'>;
 
 const AuthScreen = () => {
-  type NavigationProps = NativeStackNavigationProp<
-    AuthStackParamList,
-    'AuthScreen'
-  >;
 
   // const navigation = useNavigation<NavigationProps>();
   const { navigation } = useCustomAuthNavigation('MobileNumberScreen');
+
+  const GlobalStyles = useGlobalStyles()
+  const dispatch = useAppDispatch();
+
+  const [value, setValue] = useState(false);
+
+  useEffect(() => {
+    dispatch(setTheme(value))
+  }, [value]);
 
   return (
     <View style={GlobalStyles.centerContainer}>
@@ -50,19 +48,19 @@ const AuthScreen = () => {
       <CustomPrimaryButton
         title={AppStrings.createAccount}
         onPress={() => {
-          console.log('create ac');
           navigation.navigate('MobileNumberScreen')
           //  navigation.navigate('MobileNumber');
         }}
       />
       <CustomSecondarybutton
+        disabled={false}
         title={AppStrings.signIn}
         onPress={() => {
-          console.log('signin');
           navigation.navigate('MobileNumberScreen');
-
         }}
       />
+      <Text style={GlobalStyles.infoText} onPress={() => setValue(false)}>Light Mode</Text>
+      <Text style={GlobalStyles.infoText} onPress={() => setValue(true)}>Dark Mode</Text>
     </View>
   );
 };

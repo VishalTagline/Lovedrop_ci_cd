@@ -1,8 +1,8 @@
-import { Image, StyleSheet, Text, Touchable, TouchableWithoutFeedback, View } from 'react-native'
+import { Image, SafeAreaView, StyleSheet, Text, Touchable, TouchableWithoutFeedback, View } from 'react-native'
 import React from 'react'
 import { Images } from '../utils/ImagePaths'
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen'
-import { GlobalStyles } from '../styles/GlobalStyles'
+import { useGlobalStyles } from '../styles/GlobalStyles'
 
 interface Props {
   title?: string;
@@ -11,13 +11,18 @@ interface Props {
 }
 
 const CustomHeader: React.FC<Props> = ({ title, onPress, back }) => {
+
+  const GlobalStyles = useGlobalStyles()
+
   return (
-    <View style={GlobalStyles.headerContainer}>
-      {back && <TouchableWithoutFeedback onPress={onPress}>
-        <Image source={Images.back} style={styles.img} />
-      </TouchableWithoutFeedback>}
-      <Text>{title}</Text>
-    </View>
+    <SafeAreaView>
+      <View style={GlobalStyles.headerContainer}>
+        {back && <TouchableWithoutFeedback onPress={onPress}>
+          <Image source={Images.back} style={styles.img} />
+        </TouchableWithoutFeedback>}
+        <Text>{title}</Text>
+      </View>
+    </SafeAreaView>
   );
 };
 

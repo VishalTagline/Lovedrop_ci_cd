@@ -14,12 +14,13 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <NavigationContainer>
-          <RootStack />
-          {/* <Test /> */}
-        </NavigationContainer>
-      </SafeAreaView>
+      <StatusBar translucent backgroundColor={'transparent'} />
+      {/* <SafeAreaView style={{ flex: 1 }}> */}
+      <NavigationContainer>
+        <RootStack />
+        {/* <Test /> */}
+      </NavigationContainer>
+      {/* </SafeAreaView> */}
     </Provider>
   );
 };

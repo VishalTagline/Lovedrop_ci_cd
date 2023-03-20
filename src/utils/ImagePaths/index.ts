@@ -1,10 +1,17 @@
 export const Images = {
     logoWithName: require('../../assets/images/logo_name.png'),
     appName: require('../../assets/images/appName.png'),
+    appNameWhite: require('../../assets/images/appName_white.png'),
     logo: require('../../assets/images/logo.png'),
     back: require('../../assets/images/back.png'),
     welcomeImage1: require('../../assets/images/welcomeImage1.png'),
     welcomeImage2: require('../../assets/images/welcomeImage2.png'),
     welcomeImage3: require('../../assets/images/welcomeImage3.png'),
+    checked: require('../../assets/images/checkbox_checked.png'),
+    unchecked: require('../../assets/images/checkbox_unchecked.png'),
     heart: require('../../assets/images/heart.png'),
+    search: require('../../assets/images/search.png'),
+    person1: require('../../assets/images/person1.png'),
+    person2: require('../../assets/images/person2.png'),
+    person3: require('../../assets/images/person3.png'),
 }

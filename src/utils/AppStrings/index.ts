@@ -1,4 +1,5 @@
 export const AppStrings = {
+  appName: 'LoveDrop',
   byTapping: 'By tapping Create Account or Sign In, you agree to our ',
   terms: 'Terms.',
   learnHow: ' Learn how we process your data in our ',
@@ -12,6 +13,7 @@ export const AppStrings = {
     'We will send a text with a verification code. Message and data rates may apply.',
   continue: 'CONTINUE',
   phoneNumError: '* Please enter valid Phone Number',
+  phoneRequied: '* Phone Number is required',
   myCode: 'My Code is',
   resend: 'Resend',
   otpError: '* Please enter valid OTP Code',
@@ -19,11 +21,16 @@ export const AppStrings = {
   dontLoseAccess: "Don't lose access to your account,verify your email.",
   enterEmail: 'Enter email',
   emailError: '* Please enter valid Email',
+  emailRequied: '* Email is required',
   myFirstName: 'My first name is',
   youWillNotable: 'You will not be able to change this',
   firstName: 'First Name',
-  nameError: '* Please enter valid Name',
+  nameError: '* Please enter valid First Name',
+  nameRequied: '* First Name is required',
+  nameMin: '* First Name have minimun 3 character',
   birthDate: 'My birthday is',
+  dateError: '* Please enter valid Date',
+  dateRequied: '* Date is required',
   iam: 'I am a',
   male: 'Male',
   female: 'Female',
@@ -32,6 +39,13 @@ export const AppStrings = {
   reveal: 'REVEAL',
   welcomeTo: 'Welcome to ',
   connectContact: 'Connect your contacts',
-  dontLose: 'Don’t lose.'
+  dontLose: 'Don’t lose.',
+  inbox: 'Inbox',
+  profile: 'Profile',
+  search: 'Search',
+  byContact: 'by contact',
+  orAddByPhoneNumber: 'or add by phone number ',
+  sendDrop: 'SEND DROP',
+  sendNote: 'Send Note'
 
 };

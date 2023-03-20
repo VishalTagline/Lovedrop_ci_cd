@@ -1,12 +1,16 @@
+import { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import { NavigatorScreenParams } from "@react-navigation/native";
+import { userType } from "../UserTypes/usertype";
 export type AuthStackParamList = {
   AuthScreen: undefined;
   MobileNumberScreen: undefined;
-  OTPCodeScreen: { number: string };
-  EmailScreen: undefined;
-  FirstNameScreen: undefined;
-  BirthdayScreen: undefined;
-  GenderScreen: undefined;
+  OTPCodeScreen: { data: userType }
+  // { number: string, confirm: FirebaseAuthTypes.ConfirmationResult | undefined }
+  ;
+  EmailScreen: { data: userType };
+  FirstNameScreen: { data: userType };
+  BirthdayScreen: { data: userType };
+  GenderScreen: { data: userType };
   WelcomeScreen: undefined
 };
 

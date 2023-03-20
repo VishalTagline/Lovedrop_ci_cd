@@ -1,5 +1,6 @@
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
+apply plugin: 'com.google.gms.google-services'
 
 import com.android.build.OutputFile
 
@@ -112,10 +113,22 @@ android {
     }
     signingConfigs {
         debug {
-            storeFile file('debug.keystore')
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
+            // storeFile file('debug.keystore')
+            // storePassword 'android'
+            // keyAlias 'androiddebugkey'
+            // keyPassword 'android'
+            storeFile file('/Users/mac/Documents/Keystore/lovedrop')
+            storePassword '123456'
+            keyAlias 'key'
+            keyPassword '123456'
+        }
+        release {
+        if (project.hasProperty('/Users/mac/Documents/Keystore/lovedrop')) {
+            storeFile file('/Users/mac/Documents/Keystore/lovedrop')
+            storePassword '123456'
+            keyAlias 'key'
+            keyPassword '123456'
+        }
         }
     }
     buildTypes {
@@ -153,6 +166,13 @@ dependencies {
     implementation("com.facebook.react:react-android")
 
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
+
+
+    implementation platform('com.google.firebase:firebase-bom:31.2.3')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-auth'
+
+
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
