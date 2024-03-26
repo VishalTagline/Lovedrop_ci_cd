@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "432937754747",
+    "project_id": "lovedrop-a0678",
+    "storage_bucket": "lovedrop-a0678.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:432937754747:android:f2e8a85456d15bcd0242de",
+        "android_client_info": {
+          "package_name": "com.lovedrop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "432937754747-tkkt03qj2cqq97ktt5pqkp97om6acjd3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lovedrop",
+            "certificate_hash": "18d20dc4a74f89247ce46e27589322267d586d5d"
+          }
+        },
+        {
+          "client_id": "432937754747-gi46d4b839ar5bt3jf0baehh35v2nouc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVMDMvc6U8GxIHjjS1O4wzCN6wNjl3DH0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "432937754747-gi46d4b839ar5bt3jf0baehh35v2nouc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
