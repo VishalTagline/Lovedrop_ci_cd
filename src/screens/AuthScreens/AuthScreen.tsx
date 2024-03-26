@@ -6,7 +6,7 @@ import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { useGlobalStyles } from '../../styles/GlobalStyles';
 import CustomPrimaryButton from '../../components/CustomPrimaryButton';
 import CustomSecondarybutton from '../../components/CustomSecondarybutton';
-import { useCustomAuthNavigation, useCustomNavigation } from '../../navigation/hooks/useCustomNavigation';
+import { useCustomNavigation } from '../../navigation/hooks/useCustomNavigation';
 import { useAppDispatch } from '../../redux/Store';
 import { setTheme } from '../../redux/slice/CommonSlice';
 
@@ -17,7 +17,9 @@ import { setTheme } from '../../redux/slice/CommonSlice';
 const AuthScreen = () => {
 
   // const navigation = useNavigation<NavigationProps>();
-  const { navigation } = useCustomAuthNavigation('MobileNumberScreen');
+
+  // const { navigation } = useCustomAuthNavigation('MobileNumberScreen');
+  const { navigation } = useCustomNavigation('AuthStack');
 
   const GlobalStyles = useGlobalStyles()
   const dispatch = useAppDispatch();
@@ -48,15 +50,21 @@ const AuthScreen = () => {
       <CustomPrimaryButton
         title={AppStrings.createAccount}
         onPress={() => {
-          navigation.navigate('MobileNumberScreen')
-          //  navigation.navigate('MobileNumber');
+          // navigation.navigate('MobileNumberScreen')
+          navigation.navigate('AuthStack', {
+            screen: 'MobileNumberScreen'
+          })
+
         }}
       />
       <CustomSecondarybutton
         disabled={false}
         title={AppStrings.signIn}
         onPress={() => {
-          navigation.navigate('MobileNumberScreen');
+          // navigation.navigate('MobileNumberScreen');
+          navigation.navigate('AuthStack', {
+            screen: 'MobileNumberScreen'
+          })
         }}
       />
       <Text style={GlobalStyles.infoText} onPress={() => setValue(false)}>Light Mode</Text>

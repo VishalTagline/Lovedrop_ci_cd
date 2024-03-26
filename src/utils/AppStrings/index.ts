@@ -46,6 +46,17 @@ export const AppStrings = {
   byContact: 'by contact',
   orAddByPhoneNumber: 'or add by phone number ',
   sendDrop: 'SEND DROP',
-  sendNote: 'Send Note'
+  sendNote: 'Send Note',
+  notes: 'Notes',
+  coins: 'Coins',
+  termsPrivacy: 'Terms/Privacy',
+  logout: 'Log Out',
+  anonymousGirlLikedyou: 'An Anonymous Girl Liked You',
+  anonymousBoySentNote: 'An Anonymous Boy Sent a Note',
+  youSentNote: 'You sent Andrew a Note',
+  editProfile: 'Edit Profile',
+  updateProfile: 'Update Profile',
+  noChatsFound: 'No chats found',
+
 
 };

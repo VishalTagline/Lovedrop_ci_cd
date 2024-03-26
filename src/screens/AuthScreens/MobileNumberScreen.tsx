@@ -4,7 +4,7 @@ import CustomHeader from '../../components/CustomHeader';
 import { useGlobalStyles } from '../../styles/GlobalStyles';
 import { AppStrings } from '../../utils/AppStrings';
 import CustomSecondarybutton from '../../components/CustomSecondarybutton';
-import { useCustomAuthNavigation } from '../../navigation/hooks/useCustomNavigation';
+import { useCustomNavigation } from '../../navigation/hooks/useCustomNavigation';
 import CustomPhoneNumberField from '../../components/CustomPhoneNumberField';
 import { Formik, useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -19,8 +19,9 @@ const MobileNumberScreen = () => {
   const [phoneNumError, setphoneNumError] = useState('');
   const [disabled, setdisabled] = useState(true);
   const [confirm, setconfirm] = useState<FirebaseAuthTypes.ConfirmationResult>();
+  // const [confirm, setconfirm] = useState<FirebaseAuthTypes.PhoneAuthListener>();
 
-  const { navigation } = useCustomAuthNavigation('MobileNumberScreen');
+  const { navigation } = useCustomNavigation('AuthStack');
 
   const GlobalStyles = useGlobalStyles()
 
@@ -60,21 +61,48 @@ const MobileNumberScreen = () => {
 
   const signinPhoneNumber = async (number: string) => {
     try {
+
+      // const res = auth().verifyPhoneNumber(number)
+      // console.log('result of verify Phone Number : ', res);
+      // const credential = auth.PhoneAuthProvider.credential((await res).verificationId, '123456');
+      // console.log("credential : ", credential)
+
+      // const user = auth().currentUser
+      // console.log(user)
+
+
       const res = await auth().signInWithPhoneNumber(number, true);
       console.log('result of phone number signin : ', res);
       setconfirm(res);
-      navigation.navigate('OTPCodeScreen', {
-        // number: number,
-        // confirm: res
-        data: {
-          phoneNumber: number,
-          confirm: res,
+
+
+      navigation.navigate('AuthStack', {
+        screen: 'OTPCodeScreen',
+        params: {
+          data: {
+            phoneNumber: number,
+            confirm: res,
+          },
         },
-      });
+      })
+
+      // navigation.navigate('OTPCodeScreen', {
+      //   // number: number,
+      //   // confirm: res
+      //   data: {
+      //     phoneNumber: number,
+      //     confirm: res,
+      //   },
+      // });
 
     } catch (error: any) {
       console.log('ERROR : : ', { error });
-      Alert.alert('Signin', error.userInfo.message);
+      if (error.code == 'auth/invalid-phone-number') {
+        Alert.alert(AppStrings.appName, 'Invalid Phone number.')
+      } else {
+        Alert.alert('Signin', 'Something went wrong !');
+      }
+      // Alert.alert('Signin', error.userInfo.message);
     }
   }
 
@@ -87,7 +115,7 @@ const MobileNumberScreen = () => {
           navigation.goBack();
         }}
       />
-      <KeyboardAvoidingView behavior={'height'} style={{ flex: 1 }}>
+      <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'height' : 'padding'} style={{ flex: 1 }}>
         {/* <View style={GlobalStyles.formHeaderContainer}>
           <Text style={GlobalStyles.formHeader}>{AppStrings.myNumber}</Text>
           <CustomPhoneNumberField

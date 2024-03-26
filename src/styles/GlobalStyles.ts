@@ -17,6 +17,10 @@ export const useGlobalStyles = () => {
       backgroundColor: colors.PRIMARY_BG,
       // padding: wp(5),
     },
+    tabIcon: {
+      height: wp(8),
+      width: wp(8)
+    },
     headerContainer: {
       // flex: 1,
       backgroundColor: colors.PRIMARY_BG,
@@ -151,6 +155,51 @@ export const useGlobalStyles = () => {
       color: colors.PRIMARY_BG,
       fontWeight: '700',
     },
+    usernameText: {
+      fontSize: FontSizes.FontSize_26,
+      fontFamily: 'PublicSans-Regular',
+      color: colors.PRIMART_TEXT,
+      fontWeight: '700',
+    },
+    phoneText: {
+      fontSize: FontSizes.FontSize_12,
+      fontFamily: 'PublicSans-Regular',
+      color: colors.LIGHT_TEXT,
+      fontWeight: '300',
+    },
+    dropdownText: {
+      fontSize: FontSizes.FontSize_20,
+      fontFamily: 'PublicSans-Regular',
+      color: colors.PRIMART_TEXT,
+      fontWeight: '700',
+    },
+    inboxHeaderTitle: {
+      fontSize: FontSizes.FontSize_20,
+      fontFamily: 'PublicSans-Regular',
+      color: colors.PRIMARY_BG,
+      fontWeight: '700',
+
+      // flex: 1
+    },
+    inboxSubHeaderTitle: {
+      fontSize: FontSizes.FontSize_12,
+      fontFamily: 'PublicSans-Regular',
+      color: colors.PRIMARY_BG,
+      fontWeight: '700',
+      // marginHorizontal: wp(2)
+    },
+    contactName: {
+      fontSize: FontSizes.FontSize_17,
+      fontFamily: 'Inter-Regular',
+      color: colors.PRIMART_TEXT,
+      fontWeight: '400',
+    },
+    contactNumber: {
+      fontSize: FontSizes.FontSize_14,
+      fontFamily: 'Inter-Regular',
+      color: colors.CONTACT_NUMBER,
+      fontWeight: '400',
+    }
   })
 
 }

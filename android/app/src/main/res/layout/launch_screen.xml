@@ -8,8 +8,8 @@
     >
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="271dp"
+        android:layout_height="444dp"
         android:src="@drawable/splashlogo_white" />
 
 </LinearLayout>

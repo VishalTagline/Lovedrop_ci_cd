@@ -14,16 +14,16 @@ const CustomPhoneNumberField: React.FC<Props> = ({ onChangeText, value }) => {
 
     const styles = useStyles()
     const GlobalStyles = useGlobalStyles()
-    const [val, setVal] = useState(value)
+    // const [val, setVal] = useState(value)
     // console.log({ val })
 
-    useEffect(() => {
-        setVal(value)
-        setTimeout(() => {
+    // useEffect(() => {
+    //     setVal(value)
+    //     setTimeout(() => {
 
-            setVal('')
-        }, 2000);
-    }, [value]);
+    //         setVal('')
+    //     }, 2000);
+    // }, [value]);
 
     // const { colors } = useAppSelector(state => state.CommonSlice);
 
@@ -35,6 +35,7 @@ const CustomPhoneNumberField: React.FC<Props> = ({ onChangeText, value }) => {
         // placeholder={' '}
         // containerStyle={{marginVertical: wp(5)}}
         // onChangeText={onChangeText}
+        // defaultCode='US'
         value={value}
         onChangeFormattedText={onChangeText}
     />

@@ -1,4 +1,4 @@
-import { FlatList, Image, StyleSheet, Text, View } from 'react-native'
+import { FlatList, Image, PermissionsAndroid, Platform, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import CustomHeader from '../../components/CustomHeader';
 import { useGlobalStyles } from '../../styles/GlobalStyles';
@@ -6,9 +6,10 @@ import { AppStrings } from '../../utils/AppStrings';
 import CustomPrimaryButton from '../../components/CustomPrimaryButton';
 import { Images } from '../../utils/ImagePaths';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import { useCustomAuthNavigation, useCustomNavigation } from '../../navigation/hooks/useCustomNavigation';
+import { useCustomNavigation } from '../../navigation/hooks/useCustomNavigation';
 import CustomCheckBox from '../../components/CustomCheckBox';
 import { useAppSelector } from '../../redux/Store';
+import { RequestContacts } from '../../utils/CommonFunctions';
 
 const DataList = [
     {
@@ -42,7 +43,7 @@ const WelcomeScreen = () => {
     const [isNext, setisNext] = useState(false);
     const [isCheck, setisCheck] = useState(false);
 
-    const { navigation, route } = useCustomNavigation('AuthStack');
+    const { navigation } = useCustomNavigation('Home');
 
     return (
         <View style={GlobalStyles.mainContainer}>
@@ -105,10 +106,23 @@ const WelcomeScreen = () => {
                 }
                 <CustomPrimaryButton
                     title={isNext ? AppStrings.reveal : AppStrings.getStared}
-                    onPress={() => {
+                    onPress={async () => {
                         // setisNext(!isNext)
                         if (isNext) {
-                            navigation.replace('HomeScreen')
+                            if (isCheck) {
+                                if (Platform.OS == 'android') {
+                                    const granted = await RequestContacts()
+                                    // console.log(granted)
+                                    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                                        navigation.replace('Home', {
+                                            screen: 'HomeScreen'
+                                        })
+                                    }
+                                }
+                            }
+                            navigation.replace('Home', {
+                                screen: 'HomeScreen'
+                            })
                         }
                         setisNext(true)
                     }}

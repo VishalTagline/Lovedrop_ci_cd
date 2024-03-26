@@ -2,7 +2,7 @@ import { KeyboardAvoidingView, Platform, StyleSheet, Text, View } from 'react-na
 import React, { useState } from 'react'
 import CustomHeader from '../../components/CustomHeader';
 import { useGlobalStyles } from '../../styles/GlobalStyles';
-import { useCustomAuthNavigation } from '../../navigation/hooks/useCustomNavigation';
+import { useCustomNavigation } from '../../navigation/hooks/useCustomNavigation';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { FontSizes } from '../../utils/Fontsizes';
 import { AppStrings } from '../../utils/AppStrings';
@@ -12,18 +12,21 @@ import CustomSecondarybutton from '../../components/CustomSecondarybutton';
 import CustomDateInput from '../../components/CustomDateInput';
 import { useFormik } from 'formik';
 import * as Yup from "yup";
+import { useRoute } from '@react-navigation/native';
+import { AuthRouteProps } from '../../types/NavigationTypes/navigationTypes';
 
 const BirthdayScreen = () => {
 
   const [date, setdate] = useState('');
   const [disabled, setdisabled] = useState(true);
 
-  const { navigation, route } = useCustomAuthNavigation('BirthdayScreen');
+  const { navigation } = useCustomNavigation('AuthStack');
+  const route = useRoute<AuthRouteProps<'BirthdayScreen'>>()
 
   const GlobalStyles = useGlobalStyles()
 
   const data = route.params?.data
-  console.log('data : ', data)
+  // console.log('data : ', data)
 
   // const formik = useFormik({
   //   initialValues: {
@@ -68,6 +71,7 @@ const BirthdayScreen = () => {
             onChangeText={
               // formik.handleChange('date')
               (val) => {
+                // console.log(val)
                 if (val != '') {
                   setdisabled(false)
                 } else {
@@ -86,10 +90,19 @@ const BirthdayScreen = () => {
             onPress={
               // formik.handleSubmit
               () => {
-                navigation.navigate('GenderScreen', {
-                  data: {
-                    ...data,
-                    birthDate: date
+                // navigation.navigate('GenderScreen', {
+                //   data: {
+                //     ...data,
+                //     birthDate: date
+                //   }
+                // })
+                navigation.navigate('AuthStack', {
+                  screen: 'GenderScreen',
+                  params: {
+                    data: {
+                      ...data,
+                      birthDate: date
+                    }
                   }
                 })
               }

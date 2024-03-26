@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import CustomSecondarybutton from '../../components/CustomSecondarybutton';
 import { AppStrings } from '../../utils/AppStrings';
 import CustomTextInput from '../../components/CustomTextInput';
-import { useCustomAuthNavigation } from '../../navigation/hooks/useCustomNavigation';
+import { useCustomNavigation } from '../../navigation/hooks/useCustomNavigation';
 import { useGlobalStyles } from '../../styles/GlobalStyles';
 import CustomHeader from '../../components/CustomHeader';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
@@ -11,6 +11,8 @@ import { FontSizes } from '../../utils/Fontsizes';
 import { useAppSelector } from '../../redux/Store';
 import { useFormik } from 'formik';
 import * as Yup from "yup";
+import { useRoute } from '@react-navigation/native';
+import { AuthRouteProps } from '../../types/NavigationTypes/navigationTypes';
 
 
 const FirstNameScreen = () => {
@@ -18,12 +20,13 @@ const FirstNameScreen = () => {
   const [name, setname] = useState('');
   const [nameError, setnameError] = useState('');
   const [disabled, setdisabled] = useState(true);
-  const { navigation, route } = useCustomAuthNavigation('FirstNameScreen');
+  const { navigation } = useCustomNavigation('AuthStack');
+  const route = useRoute<AuthRouteProps<'FirstNameScreen'>>()
   const GlobalStyles = useGlobalStyles()
   const { colors } = useAppSelector(state => state.CommonSlice);
 
   const data = route.params?.data
-  console.log('data : ', data)
+  // console.log('data : ', data)
 
 
   const formik = useFormik({
@@ -39,13 +42,22 @@ const FirstNameScreen = () => {
         .matches(/^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$/, AppStrings.nameError)
     }),
     onSubmit: val => {
-      console.log(val)
+      // console.log(val)
       formik.resetForm()
       if (!formik.errors.name) {
-        navigation.navigate('BirthdayScreen', {
-          data: {
-            ...data,
-            firstName: formik.values.name
+        // navigation.navigate('BirthdayScreen', {
+        //   data: {
+        //     ...data,
+        //     firstName: formik.values.name
+        //   }
+        // })
+        navigation.navigate('AuthStack', {
+          screen: 'BirthdayScreen',
+          params: {
+            data: {
+              ...data,
+              firstName: formik.values.name
+            }
           }
         })
       }

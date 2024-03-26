@@ -5,9 +5,10 @@ import { useGlobalStyles } from '../styles/GlobalStyles';
 import { useAppSelector } from '../redux/Store';
 
 interface Props {
-  value: string;
+  value: string | undefined;
   onChangeText: (val: string) => void;
   placeholder: string;
+  editable?: boolean,
   background?: string
 }
 
@@ -15,6 +16,7 @@ const CustomTextInput: React.FC<Props> = ({
   value,
   onChangeText,
   placeholder,
+  editable,
   background
 }) => {
 
@@ -30,7 +32,11 @@ const CustomTextInput: React.FC<Props> = ({
         placeholder={placeholder}
         value={value}
         onChangeText={onChangeText}
+        editable={editable}
         keyboardType='email-address'
+      // multiline={true}
+      // returnKeyType='default'
+      // returnKeyLabel='enter'
       />
     </View>
   );
@@ -43,7 +49,8 @@ const useStyles = () => {
 
   return StyleSheet.create({
     inputContainer: {
-      marginTop: wp(8),
+      // marginTop: wp(5),
+      marginVertical: wp(5),
       padding: wp(2)
     }
   })

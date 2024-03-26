@@ -2,12 +2,17 @@ import { Alert, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-n
 import React, { useState } from 'react'
 import { useGlobalStyles } from '../../styles/GlobalStyles';
 import CustomHeader from '../../components/CustomHeader';
-import { useCustomAuthNavigation } from '../../navigation/hooks/useCustomNavigation';
+import { useCustomNavigation } from '../../navigation/hooks/useCustomNavigation';
 import { AppStrings } from '../../utils/AppStrings';
 import CustomSecondarybutton from '../../components/CustomSecondarybutton';
-import { useAppSelector } from '../../redux/Store';
+import { useAppDispatch, useAppSelector } from '../../redux/Store';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import firestore from '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRoute } from '@react-navigation/native';
+import { AuthRouteProps } from '../../types/NavigationTypes/navigationTypes';
+import { UserColRef } from '../../utils/Firebase/constants';
+import { genderList } from '../EditProfileScreen';
 
 
 const genders = [
@@ -17,16 +22,20 @@ const genders = [
 ]
 
 const GenderScreen = () => {
+
     const [selectedIndex, setselectedIndex] = useState(-1);
     const [disabled, setdisabled] = useState(true);
-    const [gender, setgender] = useState('');
-    const { navigation, route } = useCustomAuthNavigation('GenderScreen');
+    const [gender, setgender] = useState({
+        label: '', value: ''
+    });
+    const { navigation } = useCustomNavigation('AuthStack');
+    const route = useRoute<AuthRouteProps<'GenderScreen'>>()
     const GlobalStyles = useGlobalStyles()
     const styles = useStyles()
     const { colors } = useAppSelector(state => state.CommonSlice)
 
     const data = route.params?.data
-    console.log('data : ', data)
+    // console.log('data : ', data)
 
     return (
         <View style={GlobalStyles.mainContainer}>
@@ -40,13 +49,13 @@ const GenderScreen = () => {
             <View style={GlobalStyles.formHeaderContainer}>
                 <Text style={GlobalStyles.formHeader}>{AppStrings.iam}</Text>
                 {
-                    genders.map((item, index) =>
+                    genderList.map((item, index) =>
                         <TouchableWithoutFeedback onPress={() => {
                             setselectedIndex(index)
                             setgender(item)
                         }} >
                             <View style={index !== selectedIndex ? styles.btn : styles.selectedBtn}>
-                                <Text style={index !== selectedIndex ? styles.txt : styles.selectedTxt}>{item}</Text>
+                                <Text style={index !== selectedIndex ? styles.txt : styles.selectedTxt}>{item.label}</Text>
                             </View>
                         </TouchableWithoutFeedback>)
                 }
@@ -60,20 +69,28 @@ const GenderScreen = () => {
                     disabled={selectedIndex !== -1 ? false : true}
                     title={AppStrings.getStared}
                     onPress={() => {
-                        const DATA = { ...data, gender: gender }
-                        console.log('Data : ', DATA)
+                        const DATA = { ...data, gender: gender, image: '' }
+                        // console.log('Data : ', DATA)
 
 
-                        firestore()
-                            .collection('Users')
+                        UserColRef
                             .doc(DATA.id)
                             .set(DATA)
                             .then(() => {
-                                console.log('User added!');
-                                Alert.alert('User added!')
+                                // console.log('User added!');
+                                // Alert.alert('User added!')
                             });
 
-                        navigation.navigate('WelcomeScreen')
+                        // AsyncStorage.setItem('USER', JSON.stringify(DATA)).then(() => {
+                        AsyncStorage.setItem('USER', JSON.stringify({ id: DATA.id })).then(() => {
+
+                            // navigation.navigate('WelcomeScreen')
+                            navigation.navigate('AuthStack', {
+                                screen: 'WelcomeScreen'
+                            })
+
+                        })
+
                     }}
                 />
             </View>

@@ -20,6 +20,11 @@ export interface colorTypes {
   HOME_INPUT_BG: string,
   SEARCH_INPUT_BG: string,
   PURPLE: string,
+  PROFILE_CARD_BG: string,
+  PROFILE_CARD_SHADOW: string,
+  INBOX_BG: string,
+  CHATBOX_BG: string,
+  CONTACT_NUMBER: string
 }
 
 export const lightThemeColors: colorTypes = {
@@ -34,6 +39,15 @@ export const lightThemeColors: colorTypes = {
   HOME_INPUT_BG: '#D9D9D9',
   SEARCH_INPUT_BG: '#EFEFEF',
 
+  PROFILE_CARD_BG: '#FAE7F1',
+  PROFILE_CARD_SHADOW: '#EF5DA8',
+
+  INBOX_BG: '#D9D9D9',
+  CHATBOX_BG: '#D9D9D9',
+
+  CONTACT_NUMBER: '#8A8A8D',
+
+
   PURPLE: '#72257A'
 };
 
@@ -45,9 +59,17 @@ export const darkThemeColors: colorTypes = {
   PRIMART_TEXT: '#FFFFFF',
   ERROR_TEXT: '#FF0000',
   PRIMARY_BUTTON_TEXT: '#000000',
-  LIGHT_TEXT: '#949494',
+  LIGHT_TEXT: '#EFEFEF',
   HOME_INPUT_BG: '#D9D9D9',
   SEARCH_INPUT_BG: '#EFEFEF',
+
+  PROFILE_CARD_BG: '#EF5DA8',
+  PROFILE_CARD_SHADOW: '#FAE7F1',
+
+  INBOX_BG: '#D9D9D9',
+  CHATBOX_BG: '#D9D9D9',
+
+  CONTACT_NUMBER: '#8A8A8D',
 
   PURPLE: '#72257A'
 };
