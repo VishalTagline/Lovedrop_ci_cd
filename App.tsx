@@ -8,7 +8,6 @@ import { Provider } from 'react-redux';
 import { store } from './src/redux/Store';
 import messaging from '@react-native-firebase/messaging';
 import NotificationController from './src/config/NotificationController';
-// import PushNotification from 'react-native-push-notification';
 
 export const navigationRef = createNavigationContainerRef()
 
