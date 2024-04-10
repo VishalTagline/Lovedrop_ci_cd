@@ -1,0 +1,9 @@
+app_identifier("com.lovedrop.demo") # The bundle identifier of your app
+apple_id("bipinsakariya74@gmail.com") # Your Apple Developer Portal username
+
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile
+
+itc_team_id("122692098") # App Store Connect Team ID (distribution)
+team_id("7639N3C25S") # Developer Portal Team ID (development)
