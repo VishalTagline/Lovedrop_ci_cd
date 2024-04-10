@@ -30,9 +30,17 @@
 				<string>com.googleusercontent.apps.432937754747-n8idrtct1eatorhjal2u3srdp7mp68c3</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.432937754747-j9se0o81orhkttdhpd721soeben25ier</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>5</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -49,11 +57,13 @@
 	<key>NSCameraUsageDescription</key>
 	<string>App needs Camera Access Permission for testing</string>
 	<key>NSContactsUsageDescription</key>
-	<string></string>
+	<string>$(PRODUCT_NAME) need access of your device's contacts.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>App needs photo library Access</string>
+	<string>$(PRODUCT_NAME) need access of your device's images.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>$(PRODUCT_NAME) need access of your device's images.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Inter-Black.ttf</string>
