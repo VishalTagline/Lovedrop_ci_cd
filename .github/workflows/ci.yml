@@ -17,7 +17,7 @@ jobs:
    steps:
      - uses: maxim-lobanov/setup-xcode@v1
        with:
-         xcode-version: '14.3' #latest version
+         xcode-version: 'latest' #latest version
      - uses: actions/checkout@v2
 
 
@@ -48,7 +48,7 @@ jobs:
      - name: setup xcode version
        run: |
          cd ios
-         sudo xcode-select -s /Applications/Xcode_14.3.app  #latest version
+         sudo xcode-select -s /Applications/Xcode_14.2.app  #latest version
 
 
 
