@@ -523,9 +523,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = LoveDrop/LoveDrop.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7639N3C25S;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 7639N3C25S;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = LoveDrop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -541,6 +543,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.lovedrop.demo;
 				PRODUCT_NAME = LoveDrop;
 				PROVISIONING_PROFILE_SPECIFIER = development_love_drop_29_03_2023;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Dist_Lovedrop_cicd_27_march;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -555,9 +558,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = LoveDrop/LoveDrop.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7639N3C25S;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 7639N3C25S;
 				INFOPLIST_FILE = LoveDrop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -572,6 +577,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.lovedrop.demo;
 				PRODUCT_NAME = LoveDrop;
 				PROVISIONING_PROFILE_SPECIFIER = development_love_drop_29_03_2023;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Dist_Lovedrop_cicd_27_march;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
