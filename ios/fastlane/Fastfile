@@ -17,15 +17,15 @@ default_platform(:ios)
 
 platform :ios do
   desc "Push a new release build to the App Store"
-  # lane :get_app_store_connect_api_key do
-  #   # fetch api key data
-  #   app_store_connect_api_key(
-  #     key_id: "YS6HCWNGAX", #Your Auth key ID
-  #     issuer_id: "9389fe93-4b9b-4ba5-bff5-0470887755f9", #Your Auth key Issuer ID
-  #     key_filepath: "fastlane/AuthKey_YS6HCWNGAX.p8", #Auth key path
-  #     in_house: false,
-  #   )
-  # end
+  lane :get_app_store_connect_api_key do
+    # fetch api key data
+    app_store_connect_api_key(
+      key_id: "YS6HCWNGAX", #Your Auth key ID
+      issuer_id: "9389fe93-4b9b-4ba5-bff5-0470887755f9", #Your Auth key Issuer ID
+      key_filepath: "fastlane/AuthKey_YS6HCWNGAX.p8", #Auth key path
+      in_house: false,
+    )
+  end
   lane :release do
     ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "180"
     ENV["FASTLANE_XCODE_LIST_TIMEOUT"] = "180"
