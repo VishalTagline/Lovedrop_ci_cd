@@ -1,5 +1,5 @@
-import { Alert, SafeAreaView, StatusBar } from 'react-native';
-import React, { createRef, useEffect, useRef } from 'react';
+import { StatusBar } from 'react-native';
+import React, { useEffect } from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import { NavigationContainer, NavigationContainerRef, createNavigationContainerRef } from '@react-navigation/native';
 import RootStack from './src/navigation/RootStack/RootStack';
