@@ -542,7 +542,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.lovedrop.demo;
 				PRODUCT_NAME = LoveDrop;
-				PROVISIONING_PROFILE_SPECIFIER = development_love_drop_29_03_2023;
+				PROVISIONING_PROFILE_SPECIFIER = Dist_Lovedrop_cicd_27_march;
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Dist_Lovedrop_cicd_27_march;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -576,7 +576,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.lovedrop.demo;
 				PRODUCT_NAME = LoveDrop;
-				PROVISIONING_PROFILE_SPECIFIER = development_love_drop_29_03_2023;
+				PROVISIONING_PROFILE_SPECIFIER = Dist_Lovedrop_cicd_27_march;
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Dist_Lovedrop_cicd_27_march;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
